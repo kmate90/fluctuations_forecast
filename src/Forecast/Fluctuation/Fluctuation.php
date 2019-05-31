@@ -7,8 +7,6 @@ use App\Utils\Scraper;
 
 class Fluctuation implements ForecastInterface
 {
-    public $temp= [];
-
     /**
      * @return array|mixed
      */
@@ -16,10 +14,7 @@ class Fluctuation implements ForecastInterface
     {
         $url = "https://www.idokep.hu/elorejelzes/P%C3%A9cs";
         $temperatures = new Scraper($url);
-        $this->temp=$temperatures->executeExtractFromHtml(".min-homerseklet-default", "min_temperature");
-        return $this->temp;
-
-
+        return $temperatures->executeExtractFromHtml(".min-homerseklet-default", "min_temperature");
     }
 
     /**
@@ -29,8 +24,7 @@ class Fluctuation implements ForecastInterface
     {
         $url = "https://www.idokep.hu/elorejelzes/P%C3%A9cs";
         $temperatures = new Scraper($url);
-        $this->temp=$temperatures->executeExtractFromHtml(".max-homerseklet-default", "max_temperature");
-        return $this->temp;
+        return $temperatures->executeExtractFromHtml(".max-homerseklet-default", "max_temperature");
     }
 
     /**
@@ -38,15 +32,19 @@ class Fluctuation implements ForecastInterface
      */
     public function calculateValues()
     {
-        $this->getMaxTemperatures();
-        $this->getMinTemperatures();
-//        $min_temperature=0;
-//        $max_temperature=0;
+        $maxTemp = $this->getMaxTemperatures();
+        $minTemp = $this->getMinTemperatures();
+
+        $days = [];
+
+for ($i = 1; $i <= 7; $i++) {
+    $days[$i] = [$maxTemp["day_".$i], $minTemp["day_".$i]];
+}
+
         $fluctuations = [];
-        foreach ($this->temp as $day) {
-            $max_temperature = array_values($day)[0];
-            $min_temperature = array_values($day)[1];
-            $fluctuations[] = $max_temperature - $min_temperature;
+        foreach ($days as $key => $day) {
+
+            $fluctuations[$key]=$day[0]["max_temperature"]-$day[1]["min_temperature"];
         }
         return $fluctuations;
 

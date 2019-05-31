@@ -40,7 +40,7 @@ class ForecastCommand extends SymfonyCommand
         $output -> write(var_dump($foreCast->getMaxTemperatures()));
         } elseif ($input->getArgument("forecast_type") === "min_temperatures") {
             $foreCast = new \App\Forecast\Fluctuation\Fluctuation();
-            $output -> write(var_dump($foreCast->calculateValues()));
+            $output -> write(var_dump($foreCast->getMinTemperatures()));
         } elseif ($input->getArgument("forecast_type") === "highest_fluctuation") {
             $foreCast = new \App\Forecast\Fluctuation\MaxFluctuation();
             $output -> write(var_dump($foreCast->getMaxFluctuation()));
