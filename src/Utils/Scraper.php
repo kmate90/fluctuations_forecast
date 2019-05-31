@@ -24,7 +24,7 @@ class Scraper
         $crawler = new Crawler($html);
 
         $temperatureValues = $crawler->filter($filter);
-dump($crawler); die;
+
 
         $x = 0;
         foreach ($temperatureValues as $value) {
