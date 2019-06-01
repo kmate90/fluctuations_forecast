@@ -2,6 +2,7 @@
 
 
 namespace App\Forecast\Fluctuation;
+
 use App\Forecast\ForecastInterface;
 use App\Utils\Scraper;
 
@@ -37,14 +38,14 @@ class Fluctuation implements ForecastInterface
 
         $days = [];
 
-for ($i = 1; $i <= 7; $i++) {
-    $days[$i] = [$maxTemp["day_".$i], $minTemp["day_".$i]];
-}
+        for ($i = 1; $i <= 7; $i++) {
+            $days[$i] = [$maxTemp["day_" . $i], $minTemp["day_" . $i]];
+        }
 
         $fluctuations = [];
         foreach ($days as $key => $day) {
 
-            $fluctuations[$key]=$day[0]["max_temperature"]-$day[1]["min_temperature"];
+            $fluctuations[$key] = $day[0]["max_temperature"] - $day[1]["min_temperature"];
         }
         return $fluctuations;
 

@@ -18,6 +18,9 @@ class WebCrawler
         $this->url = $url;
     }
 
+    /**
+     * @return string
+     */
     private function crawl()
     {
         $url=$this->url;
@@ -31,9 +34,11 @@ class WebCrawler
                 echo Psr7\str($e->getResponse());
             }
         }
-
     }
 
+    /**
+     * @return string
+     */
     public function executeCrawl(){
         return $this->crawl();
     }

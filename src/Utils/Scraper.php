@@ -16,6 +16,11 @@ class Scraper
         $this->url = new WebCrawler($url);
     }
 
+    /**
+     * @param $filter
+     * @param $valueType
+     * @return array
+     */
     private function extractFromHtml($filter, $valueType)
     {
         $html = $this->url->executeCrawl();
@@ -26,10 +31,14 @@ class Scraper
             $this->temperatures["day_" . $key][$valueType] = preg_replace("/(\n|\t)/", '', $value->firstChild->textContent);
         }
 
-
         return $this->temperatures;
     }
 
+    /**
+     * @param $filter
+     * @param $valueType
+     * @return array
+     */
     public function executeExtractFromHtml($filter, $valueType)
     {
         return $this->extractFromHtml($filter, $valueType);
